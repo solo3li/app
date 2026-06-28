@@ -1,4 +1,4 @@
-import { Stack, useRouter, useSegments } from 'expo-router';
+import { Stack, useRouter, useSegments, useRootNavigationState } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
@@ -8,18 +8,26 @@ export default function RootLayout() {
   const { isLoggedIn } = useUserStore();
   const segments = useSegments();
   const router = useRouter();
+  const rootNavigationState = useRootNavigationState();
 
   useEffect(() => {
+    if (!rootNavigationState?.key) return; // Wait for navigator to mount
+
     const inAuthGroup = segments[0] === 'auth';
 
-    if (!isLoggedIn && !inAuthGroup) {
-      // Redirect to login if not logged in
-      router.replace('/auth/login');
-    } else if (isLoggedIn && inAuthGroup) {
-      // Redirect away from login if logged in
-      router.replace('/(tabs)');
-    }
-  }, [isLoggedIn, segments]);
+    // Delay navigation slightly to ensure the root layout is fully mounted
+    const timeout = setTimeout(() => {
+      if (!isLoggedIn && !inAuthGroup) {
+        // Redirect to login if not logged in
+        router.replace('/auth/login');
+      } else if (isLoggedIn && inAuthGroup) {
+        // Redirect away from login if logged in
+        router.replace('/(tabs)');
+      }
+    }, 1);
+
+    return () => clearTimeout(timeout);
+  }, [isLoggedIn, segments, rootNavigationState?.key]);
 
   return (
     <>
