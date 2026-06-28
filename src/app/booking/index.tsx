@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, SafeAreaView, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import { MotiView } from 'moti';
-import { ArrowLeft, Calendar as CalendarIcon, Clock, CheckCircle } from 'lucide-react-native';
+// import { MotiView } from 'moti';
+const MotiView = View as any;
+import { Ionicons } from '@expo/vector-icons';
 import { theme } from '@/constants/theme';
 import { useBookingStore } from '@/store/useBookingStore';
 
@@ -40,7 +41,7 @@ export default function BookingScreen() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: 'spring', damping: 15 }}
         >
-          <CheckCircle size={80} color={theme.colors.accent} style={{ marginBottom: 20 }} />
+          <Ionicons name="checkmark-circle" size={80} color={theme.colors.accent} style={{ marginBottom: 20 }} />
           <Text style={styles.successTitle}>Booking Confirmed!</Text>
           <Text style={styles.successText}>We look forward to seeing you.</Text>
           
@@ -56,7 +57,7 @@ export default function BookingScreen() {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.header}>
         <Pressable onPress={() => router.back()} style={styles.backButton}>
-          <ArrowLeft color={theme.colors.primary} size={24} />
+          <Ionicons name="arrow-back" color={theme.colors.primary} size={24} />
         </Pressable>
         <Text style={styles.headerTitle}>Complete Booking</Text>
         <View style={{ width: 24 }} />
@@ -93,7 +94,7 @@ export default function BookingScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Select Time</Text>
           <View style={styles.dateSelector}>
-            <CalendarIcon size={20} color={theme.colors.primary} />
+            <Ionicons name="calendar" size={20} color={theme.colors.primary} />
             <Text style={styles.dateText}>Today, Oct 24</Text>
           </View>
           
@@ -111,7 +112,7 @@ export default function BookingScreen() {
                     style={[styles.timeSlot, isSelected && styles.timeSlotSelected]}
                     onPress={() => setTime(time)}
                   >
-                    <Clock size={16} color={isSelected ? theme.colors.card : theme.colors.primary} style={{ marginRight: 6 }} />
+                    <Ionicons name="time" size={16} color={isSelected ? theme.colors.card : theme.colors.primary} style={{ marginRight: 6 }} />
                     <Text style={[styles.timeText, isSelected && styles.timeTextSelected]}>{time}</Text>
                   </Pressable>
                 </MotiView>

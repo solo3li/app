@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, Pressable, SafeAreaView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { MotiView, MotiScrollView } from 'moti';
-import { ArrowLeft, Star, Clock, Plus } from 'lucide-react-native';
+// import { MotiView, MotiScrollView } from 'moti';
+const MotiView = View as any;
+const MotiScrollView = ScrollView as any;
+import { Ionicons } from '@expo/vector-icons';
 import { theme } from '@/constants/theme';
 import { dummyData } from '@/constants/dummyData';
 import { useBookingStore } from '@/store/useBookingStore';
@@ -36,7 +38,7 @@ export default function ShopDetailsScreen() {
           <Image source={{ uri: shop.image }} style={styles.headerImage} resizeMode="cover" />
           <View style={styles.overlay} />
           <Pressable style={styles.backButton} onPress={() => router.back()}>
-            <ArrowLeft color={theme.colors.card} size={24} />
+            <Ionicons name="arrow-back" color={theme.colors.card} size={24} />
           </Pressable>
           <View style={styles.headerTextContainer}>
             <Text style={styles.shopName}>{shop.name}</Text>
@@ -47,7 +49,7 @@ export default function ShopDetailsScreen() {
         {/* Info & Rating */}
         <View style={styles.infoSection}>
           <View style={styles.ratingRow}>
-            <Star color={theme.colors.accent} fill={theme.colors.accent} size={18} />
+            <Ionicons name="star" color={theme.colors.accent} size={18} />
             <Text style={styles.ratingText}>{shop.rating}</Text>
             <Text style={styles.reviewsText}>({shop.reviews} reviews)</Text>
             <Text style={styles.distanceText}> • {shop.distance}</Text>
@@ -75,7 +77,7 @@ export default function ShopDetailsScreen() {
                     <Image source={{ uri: barber.avatar }} style={styles.barberAvatar} />
                     <Text style={[styles.barberName, isSelected && styles.barberNameSelected]}>{barber.name}</Text>
                     <View style={styles.barberRating}>
-                      <Star size={12} color={theme.colors.accent} fill={theme.colors.accent} />
+                      <Ionicons name="star" size={12} color={theme.colors.accent} />
                       <Text style={styles.barberRatingText}>{barber.rating}</Text>
                     </View>
                   </Pressable>
@@ -102,7 +104,7 @@ export default function ShopDetailsScreen() {
                   <View style={styles.serviceInfo}>
                     <Text style={[styles.serviceName, isSelected && styles.serviceTextSelected]}>{service.name}</Text>
                     <View style={styles.serviceMeta}>
-                      <Clock size={12} color={isSelected ? theme.colors.card : theme.colors.accent} />
+                      <Ionicons name="time" size={12} color={isSelected ? theme.colors.card : theme.colors.accent} />
                       <Text style={[styles.serviceDuration, isSelected && styles.serviceTextSelected]}>{service.duration}</Text>
                     </View>
                   </View>
@@ -112,7 +114,7 @@ export default function ShopDetailsScreen() {
                     style={[styles.addButton, isSelected && styles.addButtonSelected]} 
                     onPress={() => setService(service)}
                   >
-                    <Plus size={16} color={isSelected ? theme.colors.primary : theme.colors.card} />
+                    <Ionicons name="add" size={16} color={isSelected ? theme.colors.primary : theme.colors.card} />
                   </Pressable>
                 </MotiView>
               );

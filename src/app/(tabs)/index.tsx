@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, Pressable, SafeAreaView } from 'react-native';
-import { MotiView, MotiScrollView } from 'moti';
-import { Search } from 'lucide-react-native';
+// import { MotiView, MotiScrollView } from 'moti';
+const MotiView = View as any;
+const MotiScrollView = ScrollView as any;
+import { Ionicons } from '@expo/vector-icons';
 import { theme } from '@/constants/theme';
 import { dummyData } from '@/constants/dummyData';
 import { VintageCard } from '@/components/VintageCard';
@@ -47,7 +49,7 @@ export default function HomeScreen() {
             <Text style={styles.welcomeName}>Arthur!</Text>
           </View>
           <Pressable style={styles.searchButton}>
-            <Search color={theme.colors.primary} size={28} />
+            <Ionicons name="search" color={theme.colors.primary} size={28} />
           </Pressable>
         </MotiView>
 
