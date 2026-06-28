@@ -11,6 +11,8 @@
       "icon": "./assets/expo.icon"
     },
     "android": {
+      "package": "com.solo3lihamed.savo",
+      "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#1A1A1A",
         "foregroundImage": "./assets/images/adaptive-icon.png"
@@ -37,6 +39,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "004151d2-4df9-4bdd-a723-53bf786568a6"
+      }
+    },
+    "owner": "solo3lihamed"
   }
 }
