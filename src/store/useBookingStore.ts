@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Shop, Barber, Service } from '../constants/dummyData';
+import { Shop, Barber, Service, dummyData } from '../constants/dummyData';
 
 export interface Booking {
   id: string;
@@ -48,7 +48,41 @@ export const useBookingStore = create<BookingState>((set) => ({
   selectedPaymentMethod: null,
   
   // Dummy initial history
-  bookingHistory: [],
+  bookingHistory: [
+    {
+      id: 'bkg_1',
+      shop: dummyData.shops[0],
+      barber: dummyData.shops[0].barbers[0],
+      services: [dummyData.shops[0].services[0]],
+      time: '02:00 PM',
+      date: new Date(Date.now() - 86400000).toISOString(), // Yesterday
+      paymentMethod: 'cash',
+      status: 'Completed',
+      totalPrice: dummyData.shops[0].services[0].price
+    },
+    {
+      id: 'bkg_2',
+      shop: dummyData.shops[1],
+      barber: dummyData.shops[1].barbers[0],
+      services: [dummyData.shops[1].services[0], dummyData.shops[1].services[1]],
+      time: '04:00 PM',
+      date: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
+      paymentMethod: 'online',
+      status: 'Upcoming',
+      totalPrice: dummyData.shops[1].services[0].price + dummyData.shops[1].services[1].price
+    },
+    {
+      id: 'bkg_3',
+      shop: dummyData.shops[2],
+      barber: dummyData.shops[2].barbers[0],
+      services: [dummyData.shops[2].services[0]],
+      time: '11:00 AM',
+      date: new Date(Date.now() - 86400000 * 5).toISOString(), // 5 days ago
+      paymentMethod: 'deposit',
+      status: 'Cancelled',
+      totalPrice: dummyData.shops[2].services[0].price
+    }
+  ],
 
   setShop: (shop) => set({ selectedShop: shop, selectedBarber: null, selectedServices: [], selectedTime: null }),
   setBarber: (barber) => set({ selectedBarber: barber, selectedTime: null }),

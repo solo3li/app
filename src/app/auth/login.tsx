@@ -9,7 +9,7 @@ export default function LoginScreen() {
   const [phone, setPhone] = useState('');
 
   const handleLogin = () => {
-    if (phone.length >= 10) {
+    if (phone.length > 0) {
       router.push({ pathname: '/auth/verify', params: { phone } });
     }
   };
@@ -41,9 +41,9 @@ export default function LoginScreen() {
         </View>
 
         <TouchableOpacity 
-          style={[styles.button, phone.length < 10 && styles.buttonDisabled]} 
+          style={[styles.button, phone.length === 0 && styles.buttonDisabled]} 
           onPress={handleLogin}
-          disabled={phone.length < 10}
+          disabled={phone.length === 0}
         >
           <Text style={styles.buttonText}>تسجيل الدخول</Text>
         </TouchableOpacity>

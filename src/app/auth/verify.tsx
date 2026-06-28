@@ -36,12 +36,9 @@ export default function VerifyScreen() {
   };
 
   const handleVerify = () => {
-    const fullCode = code.join('');
-    if (fullCode.length === 4) {
-      // Simulate verification success
-      login(phone as string);
-      router.replace('/(tabs)');
-    }
+    // Simulate verification success immediately
+    login(phone as string || 'Guest');
+    router.replace('/(tabs)');
   };
 
   return (
@@ -77,9 +74,8 @@ export default function VerifyScreen() {
         </View>
 
         <TouchableOpacity 
-          style={[styles.button, code.join('').length < 4 && styles.buttonDisabled]} 
+          style={styles.button} 
           onPress={handleVerify}
-          disabled={code.join('').length < 4}
         >
           <Text style={styles.buttonText}>تأكيد</Text>
         </TouchableOpacity>

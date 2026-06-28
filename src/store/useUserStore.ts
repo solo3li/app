@@ -39,6 +39,78 @@ export const useUserStore = create<UserState>((set) => ({
       date: new Date().toISOString(),
       read: false,
       type: 'system'
+    },
+    {
+      id: 'n2',
+      title: 'خصم خاص لك 🎁',
+      message: 'استخدم كود WELCOME للحصول على خصم 20% على حجزك القادم!',
+      date: new Date(Date.now() - 3600000).toISOString(), // 1 hour ago
+      read: false,
+      type: 'offer'
+    },
+    {
+      id: 'n3',
+      title: 'تأكيد الحجز ✔️',
+      message: 'تم تأكيد حجزك مع الحلاق أحمد محمود غداً الساعة 02:00 PM.',
+      date: new Date(Date.now() - 7200000).toISOString(), // 2 hours ago
+      read: true,
+      type: 'booking'
+    },
+    {
+      id: 'n4',
+      title: 'تذكير بموعدك ⏰',
+      message: 'موعدك اليوم في صالون "الرجل الأنيق" يبدأ خلال ساعتين.',
+      date: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
+      read: true,
+      type: 'reminder'
+    },
+    {
+      id: 'n5',
+      title: 'كيف كانت تجربتك؟ ⭐',
+      message: 'الرجاء تقييم زيارتك الأخيرة لصالون "المقص الذهبي" لمساعدتنا على تحسين الخدمة.',
+      date: new Date(Date.now() - 86400000 * 2).toISOString(), // 2 days ago
+      read: false,
+      type: 'system'
+    },
+    {
+      id: 'n6',
+      title: 'عرض الويك إند 🔥',
+      message: 'احجز الآن واستفد من خصم 50% على تنظيف البشرة العميق.',
+      date: new Date(Date.now() - 86400000 * 3).toISOString(), // 3 days ago
+      read: true,
+      type: 'offer'
+    },
+    {
+      id: 'n7',
+      title: 'إلغاء حجز ❌',
+      message: 'تم إلغاء حجزك بناءً على طلبك. نأمل رؤيتك قريباً.',
+      date: new Date(Date.now() - 86400000 * 5).toISOString(), // 5 days ago
+      read: true,
+      type: 'booking'
+    },
+    {
+      id: 'n8',
+      title: 'حلاقك المفضل متاح ✂️',
+      message: 'الحلاق طارق حسام لديه مواعيد متاحة اليوم، احجز الآن!',
+      date: new Date(Date.now() - 86400000 * 7).toISOString(), // 7 days ago
+      read: true,
+      type: 'reminder'
+    },
+    {
+      id: 'n9',
+      title: 'صالون جديد انضم إلينا! 📍',
+      message: 'تم افتتاح صالون "ذا ماستر باربر" بالقرب منك، تصفح خدماتهم الآن.',
+      date: new Date(Date.now() - 86400000 * 10).toISOString(), // 10 days ago
+      read: true,
+      type: 'system'
+    },
+    {
+      id: 'n10',
+      title: 'نقاط الولاء 🌟',
+      message: 'لقد حصلت على 50 نقطة من حجزك الأخير. استخدمها لخصومات إضافية!',
+      date: new Date(Date.now() - 86400000 * 14).toISOString(), // 14 days ago
+      read: true,
+      type: 'offer'
     }
   ],
   isLoggedIn: false,
