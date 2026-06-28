@@ -3,10 +3,12 @@ import { Home, Search, CalendarClock, Bell, User } from 'lucide-react-native';
 import { theme } from '@/constants/theme';
 import { useUserStore } from '@/store/useUserStore';
 import { View, Text, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
   const notifications = useUserStore((state) => state.notifications);
   const unreadCount = notifications.filter(n => !n.read).length;
+  const insets = useSafeAreaInsets();
 
   return (
     <Tabs
@@ -16,8 +18,8 @@ export default function TabLayout() {
           backgroundColor: theme.colors.primary,
           borderTopWidth: 2,
           borderTopColor: theme.colors.accent,
-          height: 60,
-          paddingBottom: 8,
+          height: 60 + insets.bottom,
+          paddingBottom: 8 + insets.bottom,
         },
         tabBarActiveTintColor: theme.colors.card,
         tabBarInactiveTintColor: theme.colors.accent,
