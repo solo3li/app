@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   dateSelector: { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', padding: 16, backgroundColor: theme.colors.card, borderRadius: 12, borderWidth: 1, borderColor: theme.colors.border, marginBottom: 16 },
   dateText: { fontSize: 16, color: theme.colors.text, fontWeight: 'bold' },
   
-  timeGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', direction: 'rtl' },
+  timeGrid: { flexDirection: 'row-reverse', flexWrap: 'wrap', justifyContent: 'space-between' },
   timeSlot: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'center', backgroundColor: theme.colors.card, paddingVertical: 16, borderRadius: 12, borderWidth: 1, borderColor: theme.colors.border, marginBottom: 12 },
   timeSlotSelected: { backgroundColor: theme.colors.primary, borderColor: theme.colors.primary },
   timeText: { fontSize: 14, color: theme.colors.text, fontWeight: 'bold' },
