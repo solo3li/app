@@ -2,7 +2,7 @@
   "expo": {
     "name": "SAVO",
     "slug": "savo",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "app",
@@ -12,7 +12,7 @@
     },
     "android": {
       "package": "com.solo3lihamed.savo",
-      "versionCode": 3,
+      "versionCode": 4,
       "adaptiveIcon": {
         "backgroundColor": "#1A1A1A",
         "foregroundImage": "./assets/images/adaptive-icon.png"
