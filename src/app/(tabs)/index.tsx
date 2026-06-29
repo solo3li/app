@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, ScrollView, Image, Pressable, SafeAreaView, Dim
 const MotiView = View as any;
 const MotiScrollView = ScrollView as any;
 import { Ionicons } from '@expo/vector-icons';
-import { Search } from 'lucide-react-native';
+import { Search, Heart, ShoppingCart } from 'lucide-react-native';
 import { theme } from '@/constants/theme';
 import { dummyData } from '@/constants/dummyData';
 import { VintageCard } from '@/components/VintageCard';
 import { useRouter } from 'expo-router';
 import { useBookingStore } from '@/store/useBookingStore';
 import { useUserStore } from '@/store/useUserStore';
+import { useShopStore } from '@/store/useShopStore';
 
 const { width } = Dimensions.get('window');
 
@@ -17,10 +18,17 @@ export default function HomeScreen() {
   const router = useRouter();
   const setShop = useBookingStore(state => state.setShop);
   const user = useUserStore(state => state.user);
+  const { wishlistProductIds, toggleProductWishlist } = useUserStore();
+  const addToCart = useShopStore(state => state.addToCart);
 
   const handleShopPress = (shop: any) => {
     setShop(shop);
     router.push(`/shop/${shop.id}`);
+  };
+
+  const handleAddToCart = (product: any) => {
+    addToCart(product);
+    alert('تم إضافة المنتج للسلة بنجاح!');
   };
 
   return (
@@ -112,6 +120,52 @@ export default function HomeScreen() {
           </MotiScrollView>
         </View>
 
+        {/* Bundle Offers Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>باقات التوفير (المتجر)</Text>
+          <MotiScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalList}>
+            {dummyData.bundles.map((bundle, index) => (
+              <MotiView key={bundle.id} style={styles.bundleCard} from={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 800 + index * 100 }}>
+                <Image source={{ uri: bundle.image }} style={styles.bundleImage} />
+                <View style={styles.bundleInfo}>
+                  <Text style={styles.bundleTitle}>{bundle.title}</Text>
+                  <Text style={styles.bundleDesc} numberOfLines={2}>{bundle.description}</Text>
+                  <View style={styles.bundlePriceRow}>
+                    <Text style={styles.bundleOldPrice}>{bundle.totalPrice} ج</Text>
+                    <Text style={styles.bundlePrice}>{bundle.discountedPrice} ج</Text>
+                  </View>
+                </View>
+              </MotiView>
+            ))}
+          </MotiScrollView>
+        </View>
+
+        {/* Products Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>منتجات مختارة لك</Text>
+          <MotiScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalList}>
+            {dummyData.products.map((product, index) => {
+              const isWished = wishlistProductIds.includes(product.id);
+              return (
+                <MotiView key={product.id} style={styles.productCard} from={{ opacity: 0, translateY: 20 }} animate={{ opacity: 1, translateY: 0 }} transition={{ delay: 1000 + index * 100 }}>
+                  <Image source={{ uri: product.image }} style={styles.productImage} />
+                  <Pressable style={styles.wishlistBtn} onPress={() => toggleProductWishlist(product.id)}>
+                    <Heart size={20} color={isWished ? 'red' : theme.colors.textSecondary} fill={isWished ? 'red' : 'transparent'} />
+                  </Pressable>
+                  <View style={styles.productInfo}>
+                    <Text style={styles.productName} numberOfLines={1}>{product.name}</Text>
+                    <Text style={styles.productPrice}>{product.price} ج</Text>
+                    <Pressable style={styles.addToCartBtn} onPress={() => handleAddToCart(product)}>
+                      <ShoppingCart size={16} color="#fff" />
+                      <Text style={styles.addToCartText}>أضف للسلة</Text>
+                    </Pressable>
+                  </View>
+                </MotiView>
+              );
+            })}
+          </MotiScrollView>
+        </View>
+
         <View style={styles.bottomPadding} />
       </ScrollView>
     </SafeAreaView>
@@ -157,6 +211,24 @@ const styles = StyleSheet.create({
   offerTitle: { color: theme.colors.card, fontSize: 18, fontWeight: 'bold', marginBottom: 8, textAlign: 'right' },
   offerCodeContainer: { backgroundColor: theme.colors.primary, alignSelf: 'flex-end', paddingHorizontal: 12, paddingVertical: 4, borderRadius: 8 },
   offerCode: { color: theme.colors.card, fontWeight: 'bold', fontSize: 14 },
+  
+  bundleCard: { width: 280, backgroundColor: theme.colors.card, borderRadius: 16, overflow: 'hidden', marginLeft: 16, borderWidth: 1, borderColor: theme.colors.border },
+  bundleImage: { width: '100%', height: 140 },
+  bundleInfo: { padding: 12, alignItems: 'flex-end' },
+  bundleTitle: { fontSize: 16, fontWeight: 'bold', color: theme.colors.text, marginBottom: 4 },
+  bundleDesc: { fontSize: 12, color: theme.colors.textSecondary, textAlign: 'right', marginBottom: 8 },
+  bundlePriceRow: { flexDirection: 'row-reverse', alignItems: 'center' },
+  bundlePrice: { fontSize: 18, fontWeight: 'bold', color: theme.colors.primary, marginLeft: 8 },
+  bundleOldPrice: { fontSize: 14, color: theme.colors.textSecondary, textDecorationLine: 'line-through' },
+  
+  productCard: { width: 160, backgroundColor: theme.colors.card, borderRadius: 16, overflow: 'hidden', marginLeft: 16, borderWidth: 1, borderColor: theme.colors.border },
+  productImage: { width: '100%', height: 160 },
+  wishlistBtn: { position: 'absolute', top: 8, left: 8, backgroundColor: 'rgba(255,255,255,0.8)', padding: 6, borderRadius: 16 },
+  productInfo: { padding: 12, alignItems: 'flex-end' },
+  productName: { fontSize: 14, fontWeight: 'bold', color: theme.colors.text, marginBottom: 4, textAlign: 'right' },
+  productPrice: { fontSize: 16, fontWeight: 'bold', color: theme.colors.primary, marginBottom: 8 },
+  addToCartBtn: { flexDirection: 'row-reverse', alignItems: 'center', backgroundColor: theme.colors.primary, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8, width: '100%', justifyContent: 'center' },
+  addToCartText: { color: '#fff', fontSize: 12, fontWeight: 'bold', marginRight: 4 },
   
   bottomPadding: { height: 100 },
 });

@@ -56,6 +56,27 @@ export interface Offer {
   validUntil: string;
 }
 
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category: 'hair_care' | 'beard_care' | 'skin_care' | 'tools';
+  inStock: boolean;
+  rating: number;
+}
+
+export interface BundleOffer {
+  id: string;
+  title: string;
+  description: string;
+  products: Product[];
+  totalPrice: number;
+  discountedPrice: number;
+  image: string;
+}
+
 const generateTimes = () => {
   const times = [];
   for (let i = 10; i <= 22; i++) {
@@ -173,9 +194,24 @@ const extendedOffers: Offer[] = [
   { id: 'o5', title: 'احجز مرتين واحصل على الثالثة مجاناً', code: 'FREE3', discount: 100, image: imagesList[4], validUntil: '2024-12-01' },
 ];
 
+const mockProducts: Product[] = [
+  { id: 'p1', name: 'زيت اللحية الممتاز', description: 'زيت طبيعي 100% لتنعيم وتكثيف اللحية.', price: 150, image: 'https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=400&q=80', category: 'beard_care', inStock: true, rating: 4.8 },
+  { id: 'p2', name: 'كريم تصفيف الشعر (واكس)', description: 'ثبات قوي يدوم طوال اليوم بمظهر مطفي.', price: 120, image: 'https://images.unsplash.com/photo-1585232004423-244e0e6904e3?auto=format&fit=crop&w=400&q=80', category: 'hair_care', inStock: true, rating: 4.5 },
+  { id: 'p3', name: 'غسول الوجه المنعش', description: 'غسول يومي يزيل الشوائب ويمنع الحبوب.', price: 90, image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=400&q=80', category: 'skin_care', inStock: true, rating: 4.7 },
+  { id: 'p4', name: 'مجموعة العناية المتكاملة', description: 'شامبو وبلسم مخصص للرجال.', price: 200, image: 'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=400&q=80', category: 'hair_care', inStock: false, rating: 4.9 },
+  { id: 'p5', name: 'ماكينة حلاقة احترافية', description: 'ماكينة حلاقة دقيقة للتدريج والتحديد.', price: 1500, image: 'https://images.unsplash.com/photo-1593640495253-2e061807d9b9?auto=format&fit=crop&w=400&q=80', category: 'tools', inStock: true, rating: 4.6 }
+];
+
+const mockBundles: BundleOffer[] = [
+  { id: 'bnd1', title: 'باقة اللحية الأنيقة', description: 'احصل على زيت اللحية مع مشط خشبي مجاناً.', products: [mockProducts[0]], totalPrice: 200, discountedPrice: 150, image: 'https://images.unsplash.com/photo-1532710093739-9470acff878b?auto=format&fit=crop&w=400&q=80' },
+  { id: 'bnd2', title: 'باقة العناية اليومية', description: 'كريم التصفيف مع غسول الوجه بسعر خيالي.', products: [mockProducts[1], mockProducts[2]], totalPrice: 210, discountedPrice: 170, image: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=400&q=80' }
+];
+
 export const dummyData = {
   shops: extendedShops,
   offers: extendedOffers,
   barbers: extendedBarbers,
-  services: extendedServices
+  services: extendedServices,
+  products: mockProducts,
+  bundles: mockBundles
 };

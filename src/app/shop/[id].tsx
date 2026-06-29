@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { theme } from '@/constants/theme';
 import { dummyData } from '@/constants/dummyData';
 import { useBookingStore } from '@/store/useBookingStore';
-import { MapPin, Star, CheckCircle, Wifi, Wind, Coffee, Car } from 'lucide-react-native';
+import { MapPin, Star, CheckCircle, Wifi, Wind, Coffee, Car, Map, Clock } from 'lucide-react-native';
 
 const { width } = Dimensions.get('window');
 
@@ -70,6 +70,10 @@ export default function ShopDetailsScreen() {
           <View style={styles.ratingRow}>
             <MapPin color={theme.colors.textSecondary} size={16} />
             <Text style={styles.locationText}>{shop.location}</Text>
+            <Pressable style={styles.mapButton} onPress={() => alert('محاكاة: فتح خرائط جوجل للوصول إلى الصالون...')}>
+              <Map size={14} color={theme.colors.primary} />
+              <Text style={styles.mapButtonText}>الموقع</Text>
+            </Pressable>
           </View>
           <Text style={styles.descriptionText}>{shop.description}</Text>
           
@@ -106,6 +110,12 @@ export default function ShopDetailsScreen() {
                       <Star size={12} color="gold" fill="gold" />
                       <Text style={styles.barberRatingText}>{barber.rating}</Text>
                     </View>
+                    {barber.availableTimes.length === 0 && (
+                      <Pressable style={styles.waitlistBtn} onPress={() => alert('تم إضافتك لقائمة الانتظار! سنعلمك عند توفر موعد.')}>
+                        <Clock size={10} color="#fff" />
+                        <Text style={styles.waitlistBtnText}>انتظار</Text>
+                      </Pressable>
+                    )}
                   </Pressable>
                 </MotiView>
               );
@@ -206,7 +216,9 @@ const styles = StyleSheet.create({
   ratingText: { marginRight: 4, fontWeight: 'bold', fontSize: 16, color: theme.colors.text },
   reviewsText: { marginRight: 4, color: theme.colors.text, opacity: 0.7 },
   distanceText: { color: theme.colors.text, opacity: 0.7, marginRight: 4 },
-  locationText: { color: theme.colors.textSecondary, marginRight: 4, fontSize: 14 },
+  locationText: { color: theme.colors.textSecondary, marginRight: 4, fontSize: 14, flex: 1, textAlign: 'right' },
+  mapButton: { flexDirection: 'row-reverse', alignItems: 'center', backgroundColor: 'rgba(233, 30, 99, 0.1)', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8, marginLeft: 8 },
+  mapButtonText: { color: theme.colors.primary, fontSize: 12, marginRight: 4, fontWeight: 'bold' },
   descriptionText: { fontSize: 14, color: theme.colors.text, lineHeight: 22, opacity: 0.9, textAlign: 'right', marginTop: 8 },
   amenitiesContainer: { flexDirection: 'row-reverse', flexWrap: 'wrap', marginTop: 12 },
   amenityBadge: { flexDirection: 'row-reverse', alignItems: 'center', backgroundColor: theme.colors.background, paddingHorizontal: 8, paddingVertical: 4, borderRadius: 12, marginLeft: 8, marginBottom: 8 },
@@ -221,6 +233,8 @@ const styles = StyleSheet.create({
   barberNameSelected: { color: theme.colors.primary },
   barberRating: { flexDirection: 'row-reverse', alignItems: 'center', marginTop: 2 },
   barberRatingText: { fontSize: 12, marginRight: 2, color: theme.colors.text },
+  waitlistBtn: { flexDirection: 'row-reverse', alignItems: 'center', backgroundColor: '#FF9800', paddingHorizontal: 6, paddingVertical: 4, borderRadius: 8, marginTop: 4 },
+  waitlistBtnText: { color: '#fff', fontSize: 10, marginRight: 2, fontWeight: 'bold' },
   servicesList: { paddingHorizontal: 16 },
   serviceRow: { flexDirection: 'row-reverse', alignItems: 'center', padding: 16, backgroundColor: theme.colors.card, borderRadius: 12, marginBottom: 8, borderWidth: 1, borderColor: theme.colors.border },
   serviceRowSelected: { backgroundColor: theme.colors.primary, borderColor: theme.colors.primary },

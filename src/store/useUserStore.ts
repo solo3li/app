@@ -20,17 +20,37 @@ interface UserState {
   user: User | null;
   favoriteShopIds: string[];
   notifications: Notification[];
+  walletBalance: number;
+  loyaltyPoints: number;
+  referralCode: string;
+  wishlistProductIds: string[];
+  isDarkMode: boolean;
+  language: 'ar' | 'en';
   isLoggedIn: boolean;
   login: (phone: string, name?: string) => void;
   logout: () => void;
   toggleFavorite: (shopId: string) => void;
+  toggleProductWishlist: (productId: string) => void;
+  toggleTheme: () => void;
+  setLanguage: (lang: 'ar' | 'en') => void;
   addNotification: (notification: Omit<Notification, 'id' | 'read' | 'date'>) => void;
   markNotificationRead: (id: string) => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
-  user: null,
-  favoriteShopIds: [],
+  user: {
+    id: 'u_dummy',
+    name: 'مستخدم تجريبي',
+    phone: '01012345678',
+    avatar: 'https://randomuser.me/api/portraits/men/1.jpg'
+  },
+  walletBalance: 350.50,
+  loyaltyPoints: 1200,
+  referralCode: 'SAVO2026',
+  wishlistProductIds: ['p1', 'p3'],
+  isDarkMode: false,
+  language: 'ar',
+  favoriteShopIds: ['shop_0', 'shop_2'],
   notifications: [
     {
       id: 'n1',
@@ -113,7 +133,7 @@ export const useUserStore = create<UserState>((set) => ({
       type: 'offer'
     }
   ],
-  isLoggedIn: false,
+  isLoggedIn: true,
   
   login: (phone, name = 'مستخدم جديد') => set({
     user: {
@@ -135,6 +155,19 @@ export const useUserStore = create<UserState>((set) => ({
         : [...state.favoriteShopIds, shopId]
     };
   }),
+
+  toggleProductWishlist: (productId) => set((state) => {
+    const isWished = state.wishlistProductIds.includes(productId);
+    return {
+      wishlistProductIds: isWished
+        ? state.wishlistProductIds.filter(id => id !== productId)
+        : [...state.wishlistProductIds, productId]
+    };
+  }),
+
+  toggleTheme: () => set((state) => ({ isDarkMode: !state.isDarkMode })),
+  
+  setLanguage: (lang) => set({ language: lang }),
 
   addNotification: (notif) => set((state) => ({
     notifications: [
